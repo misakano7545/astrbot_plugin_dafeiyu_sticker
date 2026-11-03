@@ -1,0 +1,6 @@
+name: astrbot_plugin_dafeiyu_sticker
+display_name: 大肥鱼表情包
+author: MisakaNo
+desc: 在文字回复后面按概率补一张本地文字贴纸，群友味更足。
+version: v1.0.0
+repo: ""

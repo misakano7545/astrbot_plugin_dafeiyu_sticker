@@ -37,7 +37,8 @@ TAGS = {
 }
 
 # 半角/全角括号都认，模型手滑也不至于把标记漏到聊天里
-MARK = re.compile(r"[\[［<]fish[:：]([a-z_\-]+)[\]］>]")
+# 裸写 [fat_fish] 也算：模型看词表会照抄 - fat_fish 的样子，忘了加 fish: 前缀
+MARK = re.compile(r"[\[［<](?:fish[:：])?([a-z_\-]+)[\]］>]")
 
 HINT = "\n\n【配图】想配一张贴纸时，在回复最末尾写一个标记，如 [fish:dead_fish]。系统会把它换成图。一条回复最多一个，不确定就不写。可选：\n"
 
@@ -57,7 +58,7 @@ class DafeiyuSticker(Star):
     @filter.on_llm_request()
     async def teach_tags(self, event: AstrMessageEvent, req):
         req.system_prompt = (req.system_prompt or "") + HINT + "\n".join(
-            f"- {k}：{v}" for k, v in TAGS.items()
+            f"- [fish:{k}]：{v}" for k, v in TAGS.items()
         )
 
     @filter.on_decorating_result()
